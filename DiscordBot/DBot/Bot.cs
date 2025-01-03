@@ -30,11 +30,32 @@ namespace DiscordBot.DBot
 
             await _client.LoginAsync(Discord.TokenType.Bot, discordToken);
             await _client.StartAsync();
+
+            _client.MessageReceived += HandleCommandAsync;
         }
 
-        public Task StopAsync()
+        public async Task HandleCommandAsync(SocketMessage mes)
         {
-            throw new NotImplementedException();
+            if(mes is not SocketUserMessage message || message.Author.IsBot)
+                return;
+
+            int position = 0;
+            bool masageIsCommand = message.HasCharPrefix('!', ref position);
+
+            if (masageIsCommand)
+            {
+                await _commands.ExecuteAsync(new SocketCommandContext(_client, message), position, _serviceProvider);
+                return;
+            }
+        }
+
+        public async Task StopAsync()
+        {
+            if (_client != null)
+            {
+                await _client.LogoutAsync();
+                await _client.StopAsync();
+            }
         }
     }
 }
