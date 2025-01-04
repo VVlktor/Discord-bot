@@ -16,6 +16,10 @@ namespace DiscordBot.DBot
         public Bot(IConfiguration configuration)
         {
             _configuration = configuration;
+            DiscordSocketConfig config = new DiscordSocketConfig()
+            {
+                GatewayIntents = Discord.GatewayIntents.AllUnprivileged | Discord.GatewayIntents.MessageContent
+            };
             _client = new DiscordSocketClient();
             _commands = new CommandService();
         }

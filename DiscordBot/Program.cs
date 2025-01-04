@@ -1,4 +1,5 @@
-﻿using DiscordBot.DBot;
+﻿using DiscordBot.AiChat;
+using DiscordBot.DBot;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -15,6 +16,7 @@ namespace DiscordBot
 
             var serviceProvider = new ServiceCollection()
                 .AddSingleton<IConfiguration>(configuration)
+                .AddSingleton<ConversationHistory>()
                 .AddScoped<IBot, Bot>()
                 .BuildServiceProvider();
 
