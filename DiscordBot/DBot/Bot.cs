@@ -8,7 +8,7 @@ namespace DiscordBot.DBot
 {
     public class Bot : IBot
     {
-        private ServiceProvider _serviceProvider;
+        private ServiceProvider? _serviceProvider;
         private readonly IConfiguration _configuration;
         private readonly CommandService _commands;
         private readonly DiscordSocketClient _client;
@@ -20,7 +20,7 @@ namespace DiscordBot.DBot
             {
                 GatewayIntents = Discord.GatewayIntents.AllUnprivileged | Discord.GatewayIntents.MessageContent
             };
-            _client = new DiscordSocketClient();
+            _client = new DiscordSocketClient(config);
             _commands = new CommandService();
         }
 

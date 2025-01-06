@@ -18,6 +18,7 @@ namespace DiscordBot
                 .AddSingleton<IConfiguration>(configuration)
                 .AddSingleton<ConversationHistory>()
                 .AddScoped<IBot, Bot>()
+                .AddSingleton<ConversationHistory>()
                 .BuildServiceProvider();
 
             IBot bot = serviceProvider.GetRequiredService<IBot>();

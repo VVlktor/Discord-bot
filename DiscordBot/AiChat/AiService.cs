@@ -14,9 +14,9 @@
             throw new NotImplementedException();
         }
 
-        public void ResetChat()
+        public void ResetChat(string username)
         {
-            _conversationHistory.DeleteMessages();
+            _conversationHistory.DeleteMessages(username);
         }
     }
 }
