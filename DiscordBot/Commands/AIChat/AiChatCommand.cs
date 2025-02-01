@@ -26,7 +26,7 @@ namespace DiscordBot.Commands.AIChat
                 await ReplyAsync("Usage: !talk <thing you want to talk about wiht ai>");
                 return;
             }
-            string response = await _aiService.GetAiResponse(phrase);
+            string response = await _aiService.GetAiResponse(phrase, Context.User.Username);
             await ReplyAsync($"{response}");
         }
 

@@ -2,7 +2,7 @@
 {
     public interface IAiService
     {
-        Task<string> GetAiResponse(string userInput);
+        Task<string> GetAiResponse(string userInput, string username);
         void ResetChat(string username);
     }
 }

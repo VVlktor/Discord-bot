@@ -18,7 +18,11 @@ namespace DiscordBot
                 .AddSingleton<IConfiguration>(configuration)
                 .AddSingleton<ConversationHistory>()
                 .AddScoped<IBot, Bot>()
-                .AddSingleton<ConversationHistory>()
+                .AddScoped<IJsonGeneratorForAi, JsonGeneratorForAi>()
+                .AddHttpClient<AiService>(c => {
+                    c.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("appliaction/json"));
+                    c.DefaultRequestHeaders.Add("User-Agent", "DiscordBot");
+                }).Services
                 .BuildServiceProvider();
 
             IBot bot = serviceProvider.GetRequiredService<IBot>();

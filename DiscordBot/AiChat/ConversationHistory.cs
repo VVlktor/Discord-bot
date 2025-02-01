@@ -5,7 +5,7 @@ namespace DiscordBot.AiChat
     public class ConversationHistory
     {
         public string EndPoint;
-        private List<UserConversastion> _conv = new();
+        private List<UserConversation> _conv = new();
         private IConfiguration _configuration;
 
         public ConversationHistory(IConfiguration config)
@@ -33,7 +33,7 @@ namespace DiscordBot.AiChat
             var userConversation = _conv.FirstOrDefault(x => x.Username == author);
             if (userConversation is null)
             {
-                userConversation = new UserConversastion(author);
+                userConversation = new UserConversation(author);
                 _conv.Add(userConversation);
             }
             userConversation.Conversation.Add((author, message));
