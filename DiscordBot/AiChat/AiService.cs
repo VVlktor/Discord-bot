@@ -7,9 +7,11 @@ namespace DiscordBot.AiChat
         private ConversationHistory _conversationHistory;
         private HttpClient _httpClient;
         private IJsonGeneratorForAi _jsonGeneratorForAi;
+        private IAiResponseReader _aiResponseReader;
 
-        public AiService(IJsonGeneratorForAi jsonGeneratorForAi, HttpClient httpClient, ConversationHistory conversationHistory)
+        public AiService(IJsonGeneratorForAi jsonGeneratorForAi, IAiResponseReader aiResponseReader, HttpClient httpClient, ConversationHistory conversationHistory)
         {
+            _aiResponseReader = aiResponseReader;
             _httpClient = httpClient;
             _jsonGeneratorForAi = jsonGeneratorForAi;
             _conversationHistory = conversationHistory;
@@ -27,7 +29,7 @@ namespace DiscordBot.AiChat
                     return "Problem occurred";
 
                 string responseContent = await responseMessage.Content.ReadAsStringAsync();
-                string messageForUser = //TODO: Read AI response 
+                string messageForUser = _aiResponseReader.ExtractAIResponse(responseContent);
                 _conversationHistory.AddMessage(username, "model", messageForUser);
                 return messageForUser;
                 

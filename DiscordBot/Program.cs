@@ -19,6 +19,7 @@ namespace DiscordBot
                 .AddSingleton<ConversationHistory>()
                 .AddScoped<IBot, Bot>()
                 .AddScoped<IJsonGeneratorForAi, JsonGeneratorForAi>()
+                .AddSingleton<IAiResponseReader, GoogleAiResponseReader>()
                 .AddHttpClient<AiService>(c => {
                     c.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("appliaction/json"));
                     c.DefaultRequestHeaders.Add("User-Agent", "DiscordBot");

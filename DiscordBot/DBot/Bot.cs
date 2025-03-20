@@ -1,5 +1,6 @@
 ﻿using Discord.Commands;
 using Discord.WebSocket;
+using DiscordBot.Blackjack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -36,9 +37,30 @@ namespace DiscordBot.DBot
             await _client.StartAsync();
 
             _client.MessageReceived += HandleCommandAsync;
+
+            _client.ButtonExecuted += HandleButtonClickAsync;
         }
 
-        public async Task HandleCommandAsync(SocketMessage mes)
+        private async Task HandleButtonClickAsync(SocketMessageComponent component)
+        {
+            switch (component.Data.CustomId)
+            {
+                case "bj-start":
+                    //start bj
+                    break;
+                case "bj-hit":
+                     //handle hit
+                    break;
+                case "bj-stand":
+                    //handle stand
+                    break;
+                default:
+                    await component.RespondAsync($"{component.User.Mention} has clicked the button without id lol - yes this is glitch");
+                    break;
+            }
+        }
+
+        private async Task HandleCommandAsync(SocketMessage mes)
         {
             if(mes is not SocketUserMessage message || message.Author.IsBot)
                 return;
