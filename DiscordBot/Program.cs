@@ -1,4 +1,5 @@
 ﻿using DiscordBot.AiChat;
+using DiscordBot.Blackjack;
 using DiscordBot.DBot;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +21,7 @@ namespace DiscordBot
                 .AddScoped<IBot, Bot>()
                 .AddScoped<IJsonGeneratorForAi, JsonGeneratorForAi>()
                 .AddSingleton<IAiResponseReader, GoogleAiResponseReader>()
+                .AddSingleton<IBlackJackHandler, BlackjackHandler>()
                 .AddHttpClient<AiService>(c => {
                     c.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("appliaction/json"));
                     c.DefaultRequestHeaders.Add("User-Agent", "DiscordBot");

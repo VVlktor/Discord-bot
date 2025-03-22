@@ -13,14 +13,16 @@ namespace DiscordBot.DBot
         private readonly IConfiguration _configuration;
         private readonly CommandService _commands;
         private readonly DiscordSocketClient _client;
+        private IBlackJackHandler _blackjackHandler;
 
-        public Bot(IConfiguration configuration)
+        public Bot(IConfiguration configuration, IBlackJackHandler bjHandler)
         {
             _configuration = configuration;
             DiscordSocketConfig config = new DiscordSocketConfig()
             {
                 GatewayIntents = Discord.GatewayIntents.AllUnprivileged | Discord.GatewayIntents.MessageContent
             };
+            _blackjackHandler = bjHandler;
             _client = new DiscordSocketClient(config);
             _commands = new CommandService();
         }
@@ -46,13 +48,13 @@ namespace DiscordBot.DBot
             switch (component.Data.CustomId)
             {
                 case "bj-start":
-                    //start bj
+                    await _blackjackHandler.HandleStart(component);
                     break;
                 case "bj-hit":
-                     //handle hit
+                    await _blackjackHandler.HandleHit(component);
                     break;
                 case "bj-stand":
-                    //handle stand
+                    await _blackjackHandler.HandleStand(component);
                     break;
                 default:
                     await component.RespondAsync($"{component.User.Mention} has clicked the button without id lol - yes this is glitch");
